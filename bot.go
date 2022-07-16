@@ -11,9 +11,10 @@ import (
 )
 
 type Config struct {
-	Env      string `env:"ENV" envDefault:"dev"`
-	AppToken string `env:"SLACK_APP_TOKEN,required"`
-	BotToken string `env:"SLACK_BOT_TOKEN,required"`
+	Env          string `env:"ENV" envDefault:"dev"`
+	AppToken     string `env:"SLACK_APP_TOKEN,required"`
+	BotToken     string `env:"SLACK_BOT_TOKEN,required"`
+	EmojiChannel string `env:"EMOJI_CHANNEL" envDefault:"#general"`
 }
 
 func (c Config) isProdLike() bool {
@@ -27,6 +28,9 @@ type Bot struct {
 }
 
 func NewBot(config Config) *Bot {
+	if !strings.HasPrefix(config.EmojiChannel, "#") {
+		config.EmojiChannel = "#" + config.EmojiChannel
+	}
 	api := slack.New(
 		config.BotToken,
 		slack.OptionAppLevelToken(config.AppToken),
