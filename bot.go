@@ -168,7 +168,7 @@ func (b *Bot) handleEmojiChangedEvent(event *slackevents.EmojiChangedEvent) {
 		return // shrug
 	}
 
-	if _, _, err := b.apiClient.PostMessage("#general", message...); err != nil {
+	if _, _, err := b.apiClient.PostMessage(b.conf.EmojiChannel, message...); err != nil {
 		log.Error().Err(err).Msgf("failed to publish message to #general")
 	}
 }
