@@ -1,5 +1,5 @@
 # Start from golang base image
-FROM golang:1.18.3-alpine3.16 AS builder
+FROM golang:1.18.4-alpine3.16 AS builder
 
 # Add Maintainer info
 LABEL maintainer="Hector"
@@ -17,7 +17,7 @@ COPY . .
 # TODO(hector) - make this customaziable?
 RUN GOOS=linux GOARCH=amd64 go build -o emoji-bot *.go
 
-FROM alpine3.16 AS publish
+FROM alpine:3.16 AS publish
 
 RUN apk update
 
